@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion'; 
+import React, { useEffect, useState } from 'react';
+import { motion,AnimatePresence } from 'framer-motion'; 
 const containerVariants = {
   hidden: {
     opacity: 0,
@@ -15,6 +15,10 @@ const containerVariants = {
       when: 'beforeChildren',
       staggerChildren: 0.4
     }
+  },
+  exit: {
+    x: '-100vw',
+    transition: {ease: 'easeInOut'}
   }
 }
 
@@ -27,12 +31,27 @@ const childVariants ={
   }
 }
 
-const Order = ({ pizza }) => {
+const Order = ({ pizza,setShowModal }) => {
+
+  const [showTitle,setShowTitle] = useState(true)
+
+  useEffect(()=>
+  {
+    setTimeout(()=>{
+      setShowModal(true)
+    },5000)
+  },[setShowModal])
+
+  setTimeout(()=>{
+    setShowTitle(false)
+  },4000)
+
   return (
     <motion.div className="container order" 
     variants={containerVariants}
     initial="hidden"
     animate="visible"
+    exit="exit"
     >
       <h2>Thank you for your order :)</h2>
       <motion.p
